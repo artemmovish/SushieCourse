@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="SushieAdmin.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:SushieAdmin"
+    xmlns:view="clr-namespace:SushieAdmin.Views"
+    Title="SushieAdmin">
+
+    <TabBar>
+        <ShellContent 
+            Icon="images//menu.png"
+            Title="Создание"
+            ContentTemplate="{DataTemplate view:CreatePage }"/>
+        <ShellContent 
+            Icon="images//profile.png"
+            Title="Редактирование/удаление"
+            ContentTemplate="{DataTemplate view:ChangePage }"/>
+    </TabBar>
+
+</Shell>

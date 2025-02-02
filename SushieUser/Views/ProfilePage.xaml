@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SushieUser.Views.ProfilePage"
+             xmlns:vm="clr-namespace:SushieUser.ViewModels"
+             x:DataType="vm:ProfileViewModel"
+             xmlns:models="clr-namespace:SushieUser.Models"
+             Title="Регистрация">
+    <Grid>
+        <!--Регистрация-->
+        <Grid Padding="10" IsVisible="{Binding IsRegister}">
+            <StackLayout>
+                <Frame>
+                    <StackLayout>
+                        <StackLayout>
+                            <Label Text="Фамилия:" FontSize="24"/>
+                            <Entry Text="{Binding RegisterRequest.Surname}" FontSize="20"/>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="Имя:" FontSize="24"/>
+                            <Entry Text="{Binding RegisterRequest.Name}" FontSize="20"/>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="Отчество:" FontSize="24"/>
+                            <Entry Text="{Binding RegisterRequest.Patronymic}" FontSize="20"/>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="Логин:" FontSize="24"/>
+                            <Entry Text="{Binding RegisterRequest.Login}" FontSize="20"/>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="Пароль:" FontSize="24"/>
+                            <Entry Text="{Binding RegisterRequest.Password}" FontSize="20"/>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="Дата рождения:" FontSize="24"/>
+                            <DatePicker Date="{Binding RegisterRequest.Birth}" Format="yyy.MM.dd"/>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="Телефон:" FontSize="24"/>
+                            <Entry Text="{Binding RegisterRequest.Telephone}" FontSize="20"/>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="Электронная почта:" FontSize="24"/>
+                            <Entry Text="{Binding RegisterRequest.Email}" FontSize="20"/>
+                        </StackLayout>
+                        <Grid Padding="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Text="Уже есть аккаунт?"
+                                    Command="{Binding LogRegSwitchCommand}"
+                                    Margin="0,0,5,0"/>
+                            <Button Text="Создать аккаунт"
+                                    Command="{Binding SignInfromRegCommand}"
+                                    Margin="5,0,0,0" Grid.Column="1"/>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+
+        </Grid>
+        <!--Авторизация-->
+        <Grid IsVisible="{Binding IsLogin}">
+            <StackLayout VerticalOptions="Center" Margin="5,0,5,0">
+                <Frame>
+                    <StackLayout>
+                        <StackLayout>
+                            <Label Text="Логин:" FontSize="24"/>
+                            <Entry Text="{Binding RegisterRequest.Login}" FontSize="20"/>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="Пароль:" FontSize="24"/>
+                            <Entry Text="{Binding RegisterRequest.Password}" FontSize="20"/>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="Телефон:" FontSize="24"/>
+                            <Entry Text="{Binding RegisterRequest.Telephone}" FontSize="20"/>
+                        </StackLayout>
+                        
+                        <Grid Padding="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Text="Нет аккаута?"
+                                    Command="{Binding LogRegSwitchCommand}"
+                                    Margin="0,0,5,0"/>
+                            <Button Text="Создать аккаунт"
+                                    Command="{Binding SignInfromLogCommand}"
+                                    Margin="5,0,0,0" Grid.Column="1"/>
+                        </Grid>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </Grid>
+        <!--Просмотр и изменение-->
+        <Grid Padding="10" IsVisible="{Binding IsProfile}">
+            <StackLayout>
+                <Frame>
+                    <StackLayout>
+                        <StackLayout>
+                            <Label Text="Фамилия:" FontSize="24"/>
+                            <Entry Text="{Binding RegisterRequest.Surname}" FontSize="20"/>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="Имя:" FontSize="24"/>
+                            <Entry Text="{Binding RegisterRequest.Name}" FontSize="20"/>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="Отчество:" FontSize="24"/>
+                            <Entry Text="{Binding RegisterRequest.Patronymic}" FontSize="20"/>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="Логин:" FontSize="24"/>
+                            <Label Text="{Binding RegisterRequest.Login}" FontSize="20"/>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="Пароль:" FontSize="24"/>
+                            <Label Text="{Binding RegisterRequest.Password}" FontSize="20"/>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="Дата рождения:" FontSize="24"/>
+                            <Label Text="{Binding RegisterRequest.Birth, StringFormat='{dd.MM.yyyy}'}"
+                           FontSize="20"/>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="Телефон:" FontSize="24"/>
+                            <Label Text="{Binding RegisterRequest.Telephone}" FontSize="20"/>
+                        </StackLayout>
+                        <StackLayout>
+                            <Label Text="Электронная почта:" FontSize="24"/>
+                            <Label Text="{Binding RegisterRequest.Email}" FontSize="20"/>
+                        </StackLayout>
+                        <Button Text="Изменить аккаунт" 
+                        Margin="0,10,0,0" FontSize="24"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>

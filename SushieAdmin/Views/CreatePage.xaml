@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SushieAdmin.Views.CreatePage"
+             xmlns:vm="clr-namespace:SushieAdmin.ViewModels"
+             x:DataType="vm:CreateViewModel"
+             xmlns:models="clr-namespace:SushieUser.Models"
+             Title="CreatePage">
+    <Grid RowDefinitions="Auto, Auto">
+        <!-- Форма для создания категории -->
+        <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="Auto, *" Margin="10">
+            <Label Text="Категория:" Grid.Row="0" Grid.Column="0" VerticalOptions="Center"/>
+            <Entry Text="{Binding Category.Name}" Placeholder="Введите название категории" Grid.Row="0" Grid.Column="1" x:Name="CategoryNameEntry"/>
+
+            <Button Text="Создать категорию" Grid.Row="1" Grid.ColumnSpan="2" 
+                    Command="{Binding CreateCategoryCommand}"/>
+        </Grid>
+
+        <!-- Форма для создания суши -->
+        <Grid Grid.Row="1" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, *" Margin="10">
+            <Label Text="Название суши:" Grid.Row="0" Grid.Column="0" VerticalOptions="Center"/>
+            <Entry Text="{Binding SushieItem.name}" Placeholder="Введите название суши" Grid.Row="0" Grid.Column="1" x:Name="SushiNameEntry"/>
+
+            <Label Text="Цена:" Grid.Row="1" Grid.Column="0" VerticalOptions="Center"/>
+            <Entry Text="{Binding SushieItem.price}" Placeholder="Введите цену" Grid.Row="1" Grid.Column="1" x:Name="SushiPriceEntry" Keyboard="Numeric"/>
+
+            <Label Text="Количество:" Grid.Row="2" Grid.Column="0" VerticalOptions="Center"/>
+            <Entry Text="{Binding SushieItem.quantity}" Placeholder="Введите количество" Grid.Row="2" Grid.Column="1" x:Name="SushiQuantityEntry" Keyboard="Numeric"/>
+
+            <Label Text="Описание:" Grid.Row="3" Grid.Column="0" VerticalOptions="Center"/>
+            <Entry Text="{Binding SushieItem.description}" Placeholder="Введите описание" Grid.Row="3" Grid.Column="1" x:Name="SushiDescriptionEntry"/>
+           
+            <StackLayout Grid.Row="4">
+                <Label Text="Категория:" Margin="0,0,0,10" Grid.Column="0" VerticalOptions="Center"/>
+                <CollectionView ItemsSource="{Binding Categories}"
+                SelectedItem="{Binding CategoryFromSushieItem}"
+                SelectionMode="Single"
+                Grid.Row="4" Margin="0,0,0,0">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type models:Category}">
+                            <Frame InputTransparent="True" Padding="5" Background="Transparent">
+                                <Label Text="{Binding Name}"/>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+            
+
+            <Button Text="Создать суши" Grid.Row="5" Grid.ColumnSpan="2"
+                    Command="{Binding CreateProductCommand}"/>
+        </Grid>
+    </Grid>
+</ContentPage>

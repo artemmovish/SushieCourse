@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="SushieUser.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:SushieUser"
+    xmlns:view="clr-namespace:SushieUser.Views"
+    Title="SushieUser">
+
+    <TabBar>
+        <ShellContent 
+            Icon="images//menu.png"
+            Title="Меню"
+            ContentTemplate="{DataTemplate view:MenuPage }"/>
+        <ShellContent 
+            Icon="images//profile.png"
+            Title="Профиль"
+            ContentTemplate="{DataTemplate view:ProfilePage }"/>
+        <ShellContent 
+            Icon="images//card.png"
+            Title="Корзина"
+            ContentTemplate="{DataTemplate view:CardPage }"/>
+    </TabBar>
+</Shell>

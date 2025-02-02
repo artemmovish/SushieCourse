@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SushieAdmin.Views.ChangePage"
+             xmlns:vm="clr-namespace:SushieAdmin.ViewModels"
+             x:DataType="vm:ChangeViewModel"
+             xmlns:models="clr-namespace:SushieUser.Models"
+             Title="ChangePage">
+    <Grid RowDefinitions="*, 0.1*" Padding="10">
+        <CollectionView ItemsSource="{Binding SushieItems}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type models:SushieItem}">
+                    <Frame Padding="10" BackgroundColor="LightGray">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Поле "name" -->
+                            <Label Text="Название:" Grid.Row="0" Grid.Column="0" />
+                            <Entry Text="{Binding name}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" />
+
+                            <!-- Поле "price" -->
+                            <Label Text="Цена:" Grid.Row="1" Grid.Column="0" />
+                            <Entry Text="{Binding price, StringFormat='{0:F2}'}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" />
+
+                            <!-- Поле "quantity" -->
+                            <Label Text="Количество:" Grid.Row="2" Grid.Column="0" />
+                            <Entry Text="{Binding quantity}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" />
+
+                            <!-- Поле "description" -->
+                            <Label Text="Описание:" Grid.Row="3" Grid.Column="0" />
+                            <Entry Text="{Binding description}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" />
+
+                            <!-- Поле "category_id" -->
+                            <Label Text="Категория ID:" Grid.Row="4" Grid.Column="0" />
+                            <Entry Text="{Binding category_id}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" />
+
+                            <!-- Кнопки "Изменить" и "Удалить" -->
+                            <Button Text="Изменить" Grid.Row="5" Grid.Column="1" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ChangeViewModel}}, Path=EditCommand}"
+                                    CommandParameter="{Binding id}"/>
+                            <Button Text="Удалить" Grid.Row="5" Grid.Column="2" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ChangeViewModel}}, Path=DeleteCommand}" 
+                                    CommandParameter="{Binding id}"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button Margin="10,10,10,0" Text="Обновить" Grid.Row="1" Command="{Binding UpdateCommand}"/>
+    </Grid>
+</ContentPage>

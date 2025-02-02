@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SushieUser.Views.CardPage"
+             xmlns:vm="clr-namespace:SushieUser.ViewModels"
+             x:DataType="vm:MenuViewModels"
+             xmlns:models="clr-namespace:SushieUser.Models"
+             Title="CardPage">
+    <Grid Padding="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".1*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.2*"/>
+        </Grid.RowDefinitions>
+        <Label Text="Товары в корзине:" FontSize="24"/>
+
+        <Frame Grid.Row="1">
+            <CollectionView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame>
+                            <StackLayout Orientation="Horizontal">
+                                <Image/>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="0.9*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Label/>
+                                    <Label
+                                        Grid.Row="1"/>
+                                </Grid>
+                                <Label/>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="0.9*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Button Text="+"/>
+                                    <Button Text="-"/>
+                                </Grid>
+                            </StackLayout>
+
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Frame>
+        <Button Text="Оформить заказ"
+                Grid.Row="2" Margin="0,30,0,30"/>
+
+        <Grid Grid.RowSpan="2" Margin="15,65,15,10">
+            <Frame>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackLayout>
+                        <Label Text="Заявка на заказ" FontSize="24"
+                           HorizontalOptions="Center"/>
+                        <Rectangle Background="Black" HeightRequest="1"/>
+                    </StackLayout>
+                </Grid>
+            </Frame>
+        </Grid>
+    </Grid>
+</ContentPage>
