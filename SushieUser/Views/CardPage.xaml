@@ -20,18 +20,20 @@
                     <DataTemplate x:DataType="{x:Type models:SushieItem}">
                         <Frame>
                             <StackLayout Orientation="Vertical">
-                                <Image Source="{Binding photo}"/>
                                 <Grid>
                                     <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
+                                    <Image Source="{Binding photo}" WidthRequest="130" HeightRequest="130" Grid.Row="0"
+                                           Aspect="AspectFit" />
 
-                                    <Label Text="{Binding name}"
+                                    <Label Text="{Binding name}" Grid.Row="1"
                                            FontSize="26"/>
                                     <Label Text="{Binding description}"
                                            FontSize="20" TextColor="DarkSlateGray"
-                                        Grid.Row="1"/>
+                                        Grid.Row="2"/>
                                 </Grid>
                                 <Label Text="{Binding price}"/>
                                 <Grid ColumnDefinitions="*,*,*" >

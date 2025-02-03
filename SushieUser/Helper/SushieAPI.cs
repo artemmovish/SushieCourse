@@ -211,6 +211,7 @@ public class ApiClient
                     description = matchingItem.description,
                     price = matchingItem.price,
                     name = matchingItem.name,
+                    photo = matchingItem.photo
                 };
 
                 sushieItemsCard.Add(cart);

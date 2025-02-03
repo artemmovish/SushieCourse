@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SushieUser.Models;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 
@@ -79,24 +80,25 @@ public class ApiClient
         return items.ToArray();
     }
 
-    public async Task CreatProducts(SushieItem item)
+    public async Task CreatProducts(SushieItem item, string filePath)
     {
         string url = "/api/products/create";
 
-        var req = new
-        {
-            Name = item.name,
-            Price = item.price,
-            Quantity = item.quantity,
-            Description = item.description,
-            Category_id = item.category_id
-        };
+        using var formData = new MultipartFormDataContent();
 
-        var json = System.Text.Json.JsonSerializer.Serialize(req);
-        json = json.ToLower();
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        // Добавляем текстовые поля
+        formData.Add(new StringContent(item.name), "name");
+        formData.Add(new StringContent(item.price.ToString()), "price");
+        formData.Add(new StringContent(item.quantity.ToString()), "quantity");
+        formData.Add(new StringContent(item.description), "description");
+        formData.Add(new StringContent(item.category_id.ToString()), "category_id");
 
-        HttpResponseMessage response = await _httpClient.PostAsync(url, content);
+        // Добавляем файл
+        var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+        var fileContent = new StreamContent(fileStream);
+        formData.Add(fileContent, "photo", Path.GetFileName(filePath));
+
+        HttpResponseMessage response = await _httpClient.PostAsync(url, formData);
 
         response.EnsureSuccessStatusCode();
     }
@@ -182,8 +184,9 @@ public class ApiClient
     #endregion
 
     #region API админа
-    
+
     #endregion
+
 }
 
 

@@ -38,7 +38,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="{x:Type models:SushieItem}">
                             <Frame CornerRadius="10" Padding="1.5" BackgroundColor="White" Margin="5" 
-                                   InputTransparent="True" HasShadow="True">
+                                   InputTransparent="False" HasShadow="True">
                                 <StackLayout>
                                     <!-- Фото суши -->
                                     <Image Source="{Binding photo}" HeightRequest="130" WidthRequest="130" Aspect="AspectFit"/>

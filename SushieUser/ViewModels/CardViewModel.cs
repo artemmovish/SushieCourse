@@ -37,7 +37,6 @@ namespace SushieUser.ViewModels
             {
                 Application.Current.MainPage.DisplayAlert("Ошибка", $"Ошибка при загрузки корзины: {ex.Message}", "OK");
             }
-
         }
 
         [RelayCommand]

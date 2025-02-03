@@ -28,6 +28,9 @@ namespace SushieAdmin.ViewModels
         [ObservableProperty]
         Category category;
 
+        [ObservableProperty]
+        string imagePath;
+
         public ApiClient apiClient => SinglTone.Instance.ApiClient;
 
         public CreateViewModel()
@@ -67,12 +70,42 @@ namespace SushieAdmin.ViewModels
         }
 
         [RelayCommand]
+        async void SetImage()
+        {
+            try
+            {
+                // Запуск FilePicker для выбора изображения
+                var result = await FilePicker.Default.PickAsync(new PickOptions
+                {
+                    PickerTitle = "Выберите изображение",
+                    FileTypes = FilePickerFileType.Images // Ограничиваем выбор только изображениями
+                });
+
+                // Если пользователь выбрал файл
+                if (result != null)
+                {
+                    // Получаем путь к выбранному файлу
+                    ImagePath = result.FullPath;
+
+                    // Можно также прочитать файл как поток, если нужно
+                    using var stream = await result.OpenReadAsync();
+                    // Дополнительная обработка изображения, если необходимо
+                }
+            }
+            catch (Exception ex)
+            {
+                // Обработка ошибок (например, если пользователь отменил выбор)
+                await Shell.Current.DisplayAlert("Ошибка", $"Не удалось выбрать изображение: {ex.Message}", "OK");
+            }
+        }
+
+        [RelayCommand]
         async void CreateProduct()
         {
             try
             {
                 SushieItem.category_id = (int)CategoryFromSushieItem.Id;
-                await apiClient.CreatProducts(SushieItem);
+                await apiClient.CreatProducts(SushieItem, ImagePath);
                 LoadData();
             }
             catch (Exception ex)
