@@ -4,17 +4,22 @@ using SushieUser.Models;
 using System;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 public class ApiClient
 {
     private readonly HttpClient _httpClient;
+    private readonly string _baseUrl;
     private string? _token;
     public bool Auth = false;
 
     public ApiClient(string baseUrl)
     {
+        _baseUrl = baseUrl;
         _httpClient = new HttpClient { BaseAddress = new Uri(baseUrl) };
     }
 
@@ -43,7 +48,7 @@ public class ApiClient
 
     public async Task<SushieItem[]> GetProduct()
     {
-        HttpResponseMessage response = await _httpClient.GetAsync("api/products");
+        var response = await _httpClient.GetAsync("api/products");
 
         // Проверка успешности запроса
         response.EnsureSuccessStatusCode();
@@ -54,6 +59,11 @@ public class ApiClient
         // Десериализация JSON
         var jsonObject = JsonConvert.DeserializeObject<_ApiResponse>(json);
         var items = jsonObject.Data.ToObject<List<SushieItem>>();
+        
+        foreach (SushieItem item in items)
+        {
+            item.photo = _baseUrl + "/" + item.photo;
+        }
 
         return items.ToArray();
     }
@@ -158,11 +168,57 @@ public class ApiClient
     #endregion
 
     #region API корзины
+    public async Task AddCart(SushieItem item, int q)
+    {
+        var id = item.id;
+        var request = new
+        {
+            quantity = q
+        };
 
-    #endregion
+        var json = JsonConvert.SerializeObject(request);
 
-    #region API админа
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
 
+        var response = await _httpClient.PostAsync($"api/products/{id}", content);
+
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task<CartItem[]> GetCart()
+    {
+        var response = await _httpClient.GetAsync("api/cart");
+
+        var json = await response.Content.ReadAsStringAsync();
+        var cartResponse = System.Text.Json.JsonSerializer.Deserialize<CartResponse>(json, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        });
+
+        SushieItem[] sushieItems = await GetProduct();
+
+        List<CartItem> sushieItemsCard = new List<CartItem>();
+
+        foreach (var item in cartResponse.CartItems)
+        {
+            SushieItem matchingItem = sushieItems.FirstOrDefault(s => s.id == item.ProductId);
+            if (matchingItem != null)
+            {
+                var cart = new CartItem
+                {
+                    id = matchingItem.id,
+                    quantity = item.Quantity,
+                    description = matchingItem.description,
+                    price = matchingItem.price,
+                    name = matchingItem.name,
+                };
+
+                sushieItemsCard.Add(cart);
+            }
+        }
+
+        return sushieItemsCard.ToArray();
+    }
     #endregion
 }
 
@@ -175,4 +231,10 @@ public class ApiResponse<T>
 public class _ApiResponse
 {
     public dynamic Data { get; set; }
+}
+
+public class CartResponse
+{
+    [JsonPropertyName("cartItems")]
+    public List<Cart> CartItems { get; set; }
 }

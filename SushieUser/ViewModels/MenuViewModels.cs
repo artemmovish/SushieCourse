@@ -18,9 +18,6 @@ namespace SushieUser.ViewModels
         ObservableCollection<SushieItem> sushieItems;
 
         [ObservableProperty]
-        ObservableCollection<SushieItem> sushieCards;
-
-        [ObservableProperty]
         ObservableCollection<Category> sushieCategories;
 
         private Category _selectedCategory;
@@ -62,6 +59,12 @@ namespace SushieUser.ViewModels
         {
             var responseSushieItems = await apiClient.GetCategoriesProducts(SelectedCategory.Id);
             SushieItems = new ObservableCollection<SushieItem>(responseSushieItems);
+        }
+
+        [RelayCommand]
+        void AddCart(SushieItem item)
+        {
+            apiClient.AddCart(item, 1);
         }
     }
 }

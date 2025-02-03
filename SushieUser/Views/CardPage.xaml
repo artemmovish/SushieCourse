@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SushieUser.Views.CardPage"
              xmlns:vm="clr-namespace:SushieUser.ViewModels"
-             x:DataType="vm:MenuViewModels"
+             x:DataType="vm:CardViewModel"
              xmlns:models="clr-namespace:SushieUser.Models"
              Title="CardPage">
     <Grid Padding="10">
@@ -15,31 +15,35 @@
         <Label Text="Товары в корзине:" FontSize="24"/>
 
         <Frame Grid.Row="1">
-            <CollectionView>
+            <CollectionView ItemsSource="{Binding SushieItems}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="{x:Type models:SushieItem}">
                         <Frame>
-                            <StackLayout Orientation="Horizontal">
-                                <Image/>
+                            <StackLayout Orientation="Vertical">
+                                <Image Source="{Binding photo}"/>
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
-                                        <RowDefinition Height="0.9*"/>
+                                        <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
 
-                                    <Label/>
-                                    <Label
+                                    <Label Text="{Binding name}"
+                                           FontSize="26"/>
+                                    <Label Text="{Binding description}"
+                                           FontSize="20" TextColor="DarkSlateGray"
                                         Grid.Row="1"/>
                                 </Grid>
-                                <Label/>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="0.9*"/>
-                                    </Grid.RowDefinitions>
-
-                                    <Button Text="+"/>
-                                    <Button Text="-"/>
+                                <Label Text="{Binding price}"/>
+                                <Grid ColumnDefinitions="*,*,*" >
+                                    <Button Text="-" 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CardViewModel}}, Path=MinusCommand}"
+                                            CommandParameter="{Binding}"/>
+                                    <Label Text="{Binding quantity}" Grid.Column="1" 
+                                           FontSize="30"
+                                           VerticalOptions="Center" HorizontalOptions="Center"/>
+                                    <Button Text="+" Grid.Column="2"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CardViewModel}}, Path=PlusCommand}"
+                                            CommandParameter="{Binding}"/>
                                 </Grid>
                             </StackLayout>
 
@@ -48,10 +52,15 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </Frame>
-        <Button Text="Оформить заказ"
-                Grid.Row="2" Margin="0,30,0,30"/>
+        <Grid ColumnDefinitions="*,*" Grid.Row="2">
+            <Button Text="Обновить"
+                Margin="5" Command="{Binding LoadDataCommand}"/>
+            <Button Text="Оформить заказ"
+                Margin="5" Grid.Column="1"/>
+        </Grid>
 
-        <Grid Grid.RowSpan="2" Margin="15,65,15,10">
+
+        <Grid Grid.RowSpan="2" Margin="15,65,15,10" IsVisible="False">
             <Frame>
                 <Grid>
                     <Grid.RowDefinitions>

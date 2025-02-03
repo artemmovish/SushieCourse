@@ -30,7 +30,6 @@
         <Frame HasShadow="True" CornerRadius="10" Padding="0" Margin="10" Grid.Row="1">
             <Grid BackgroundColor="White" Padding="5">
                 <CollectionView ItemsSource="{Binding SushieItems}"
-                                SelectedItems="{Binding SushieCards}"
                                 SelectionMode="Multiple">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Orientation="Vertical" Span="2"/>
@@ -42,13 +41,16 @@
                                    InputTransparent="True" HasShadow="True">
                                 <StackLayout>
                                     <!-- Фото суши -->
-                                    <Image Source="Resources//Images//dotnet_bot.png" HeightRequest="130" WidthRequest="130" Aspect="AspectFit"/>
+                                    <Image Source="{Binding photo}" HeightRequest="130" WidthRequest="130" Aspect="AspectFit"/>
 
                                     <!-- Название и цена -->
                                     <Label Text="{Binding name}" FontSize="16" FontAttributes="Bold"/>
                                     <Label Text="{Binding price, StringFormat='₽{0:F0}'}" FontSize="14" TextColor="Green" Margin="0,0,0,0"/>
                                     <!-- Описание -->
                                     <Label Text="{Binding description}" FontSize="12" TextColor="Gray" LineBreakMode="TailTruncation"/>
+                                    <Button Padding="0" Text="+" FontSize="30" Margin="5"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MenuViewModels}}, Path=AddCartCommand}"
+                                            CommandParameter="{Binding}"/>
                                 </StackLayout>
                             </Frame>
                         </DataTemplate>

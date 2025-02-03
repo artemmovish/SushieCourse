@@ -37,7 +37,7 @@ namespace SushieUser.Helper
 
         private SinglTone()
         {
-            ApiClient = new ApiClient("https://8af3ec20-7d20-478f-8c7b-c0daebfec9d1.tunnel4.com");
+            ApiClient = new ApiClient("https://77b82897-f3dc-416e-8c41-de459785c094.tunnel4.com");
             Auth = false;
         }
     }
