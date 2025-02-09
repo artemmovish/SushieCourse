@@ -105,7 +105,7 @@ namespace SushieAdmin.ViewModels
             try
             {
                 SushieItem.category_id = (int)CategoryFromSushieItem.Id;
-                await apiClient.CreatProducts(SushieItem, ImagePath);
+                await apiClient.CreateProductAsync(SushieItem, ImagePath);
                 LoadData();
             }
             catch (Exception ex)

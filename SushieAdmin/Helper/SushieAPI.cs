@@ -87,7 +87,7 @@ public class ApiClient
         return items.ToArray();
     }
 
-    public async Task CreatProducts(SushieItem item, string filePath)
+    public async Task CreateProductAsync(SushieItem item, string filePath)
     {
         string url = "/api/products/create";
 
@@ -100,15 +100,28 @@ public class ApiClient
         formData.Add(new StringContent(item.description), "description");
         formData.Add(new StringContent(item.category_id.ToString()), "category_id");
 
-        // Добавляем файл
-        var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-        var fileContent = new StreamContent(fileStream);
+        // Добавляем файл (гарантируем закрытие потока)
+        await using var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+        using var fileContent = new StreamContent(fileStream);
         formData.Add(fileContent, "photo", Path.GetFileName(filePath));
 
-        HttpResponseMessage response = await _httpClient.PostAsync(url, formData);
+        try
+        {
+            HttpResponseMessage response = await _httpClient.PostAsync(url, formData);
 
-        response.EnsureSuccessStatusCode();
+            if (!response.IsSuccessStatusCode)
+            {
+                string errorMessage = await response.Content.ReadAsStringAsync();
+                throw new HttpRequestException($"Ошибка при отправке запроса: {response.StatusCode}, Детали: {errorMessage}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Ошибка при создании продукта: {ex.Message}");
+            throw;
+        }
     }
+
 
     public async Task ChangeProducts(SushieItem item)
     {
