@@ -11,10 +11,10 @@ public class ApiClient
     private string? _token;
     public bool Auth = false;
     public string _baseUrl;
-    public ApiClient(string baseUrl)
+
+    public ApiClient(HttpClient httpClient)
     {
-        _baseUrl = baseUrl;
-        _httpClient = new HttpClient { BaseAddress = new Uri(baseUrl) };
+        _httpClient = httpClient;
     }
 
     #region API продуктов и категорий

@@ -47,27 +47,37 @@ namespace SushieAdmin.ViewModels
         {
             try
             {
-                var responseCategoriesItems = await apiClient.GetCategories();
-                Categories = new ObservableCollection<Category>(responseCategoriesItems);
+                var responseCategoriesItems = await Task.Run(() => apiClient.GetCategories());
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    Categories = new ObservableCollection<Category>(responseCategoriesItems);
+                });
             }
             catch (Exception ex)
             {
-
-                Application.Current.MainPage.DisplayAlert("Ошибка", $"Ошибка при создании загрузки категорий: {ex.Message}", "OK");
-
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    Application.Current.MainPage.DisplayAlert("Ошибка", $"Ошибка при загрузке категорий: {ex.Message}", "OK");
+                });
             }
 
             try
             {
-                var responseSushieItems = await apiClient.GetProduct();
-                SushieItems = new ObservableCollection<SushieItem>(responseSushieItems);
+                var responseSushieItems = await Task.Run(() => apiClient.GetProduct());
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    SushieItems = new ObservableCollection<SushieItem>(responseSushieItems);
+                });
             }
             catch (Exception ex)
             {
-                Application.Current.MainPage.DisplayAlert("Ошибка", $"Ошибка при создании загрузки продуктов: {ex.Message}", "OK");
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    Application.Current.MainPage.DisplayAlert("Ошибка", $"Ошибка при загрузке продуктов: {ex.Message}", "OK");
+                });
             }
-
         }
+
 
         [RelayCommand]
         async void SetImage()
@@ -100,13 +110,13 @@ namespace SushieAdmin.ViewModels
         }
 
         [RelayCommand]
-        async void CreateProduct()
+        async Task CreateProduct()
         {
             try
             {
                 SushieItem.category_id = (int)CategoryFromSushieItem.Id;
                 await apiClient.CreateProductAsync(SushieItem, ImagePath);
-                LoadData();
+                SushieItems.Add(SushieItem);
             }
             catch (Exception ex)
             {
@@ -114,12 +124,13 @@ namespace SushieAdmin.ViewModels
             }
         }
         [RelayCommand]
-        async void CreateCategory()
+        async Task CreateCategory()
         {
             try
             {
                 await apiClient.CreatCategories(Category);
-                LoadData();
+
+                Categories.Add(Category);
             }
             catch (Exception ex)
             {

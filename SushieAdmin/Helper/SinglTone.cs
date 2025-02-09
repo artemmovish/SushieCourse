@@ -24,7 +24,7 @@ namespace SushieUser.Helper
                 if (_auth != value)
                 {
                     _auth = value;
-                    OnPropertyChanged(nameof(Auth)); // Уведомляем UI
+                    OnPropertyChanged(nameof(Auth));
                 }
             }
         }
@@ -37,8 +37,10 @@ namespace SushieUser.Helper
 
         private SinglTone()
         {
-            ApiClient = new ApiClient("https://bb9964d5-0626-47ed-a8c1-dcdc99a56d2d.tunnel4.com");
+            var httpClient = new HttpClient { BaseAddress = new Uri("https://83010fef-32dd-4630-b2dc-f348b926833e.tunnel4.com") };
+            ApiClient = new ApiClient(httpClient);
             Auth = false;
         }
     }
+
 }

@@ -8,12 +8,6 @@
              xmlns:models="clr-namespace:SushieUser.Models"
              Title="Создание">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <helpers:SelectedItemConverter x:Key="SelectedItemConverter"/>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
     <ScrollView>
         <Grid RowDefinitions="Auto, Auto" Padding="10" BackgroundColor="White">
             <!-- Форма для создания категории -->
@@ -44,7 +38,7 @@
                                 <ViewCell>
                                     <Frame Padding="10" CornerRadius="5"
                        BorderColor="Gray"
-                       BackgroundColor="{Binding ., Converter={StaticResource SelectedItemConverter}, ConverterParameter={Binding Source={x:Reference ListViewName}, Path=SelectedItem}}">
+                       BackgroundColor="{Binding }">
                                         <Label Text="{Binding Name}" FontSize="Small"/>
                                     </Frame>
                                 </ViewCell>
