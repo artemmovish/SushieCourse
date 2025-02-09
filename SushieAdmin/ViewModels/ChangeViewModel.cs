@@ -34,16 +34,9 @@ namespace SushieAdmin.ViewModels
             LoadData();
         }
         [RelayCommand]
-        async Task Edit(int id)
+        async Task Edit(SushieItem item)
         {
-            foreach (var item in sushieItems)
-            {
-                if (item.id == id)
-                {
-                    apiClient.ChangeProducts(item);
-                    break;
-                }
-            }
+            apiClient.ChangeProducts(item);
         }
 
         [RelayCommand]

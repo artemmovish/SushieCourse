@@ -19,24 +19,27 @@
 
                             <!-- Основной контент -->
                             <StackLayout Grid.Row="0" Spacing="5">
-                                <Label Text="{Binding name}" FontSize="18" FontAttributes="Bold" TextColor="Black"/>
-                                <Label Text="{Binding description}" FontSize="14" TextColor="Gray"/>
+                                <Image Source="{Binding photo}"/>
+                                <Entry Text="{Binding name}" FontSize="18" FontAttributes="Bold" TextColor="Black"/>
 
-                                <Grid ColumnDefinitions="Auto, *, Auto" RowDefinitions="Auto">
-                                    <Label Text="Цена:" Grid.Column="0" TextColor="Black" />
-                                    <Label Text="{Binding price, StringFormat='{0:F2}'}" Grid.Column="1" FontAttributes="Bold" />
-                                    <Label Text="BYN" Grid.Column="2" TextColor="Gray"/>
+                                <Editor Text="{Binding description}" FontSize="14" TextColor="Gray"/>
 
-                                    <Label Text="Количество:" Grid.Row="1" Grid.Column="0" />
-                                    <Label Text="{Binding quantity}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold"/>
+                                <Grid ColumnDefinitions="Auto, *, Auto" RowDefinitions="Auto, Auto">
+                                    <Label Text="Цена:" Grid.Row="0" Grid.Column="0" TextColor="Black" VerticalTextAlignment="Center"/>
+                                    <Entry Text="{Binding price, StringFormat='{0:F2}'}" Grid.Row="0" Grid.Column="1" FontAttributes="Bold" Keyboard="Numeric"/>
+                                    <Label Text="BYN" Grid.Row="0" Grid.Column="2" TextColor="Gray" VerticalTextAlignment="Center"/>
+
+                                    <Label Text="Количество:" Grid.Row="1" Grid.Column="0" VerticalTextAlignment="Center"/>
+                                    <Entry Text="{Binding quantity}" Grid.Row="1" Grid.Column="1" FontAttributes="Bold" Keyboard="Numeric"/>
                                 </Grid>
                             </StackLayout>
+
 
                             <!-- Кнопки -->
                             <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="End" Spacing="10">
                                 <Button Text="✏ Изменить"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ChangeViewModel}}, Path=EditCommand}"
-                                    CommandParameter="{Binding id}"
+                                    CommandParameter="{Binding}"
                                     BackgroundColor="#4CAF50" TextColor="White" CornerRadius="5"/>
 
                                 <Button Text="🗑 Удалить"

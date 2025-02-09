@@ -10,8 +10,10 @@ public class ApiClient
     private readonly HttpClient _httpClient;
     private string? _token;
     public bool Auth = false;
+    public string _baseUrl;
     public ApiClient(string baseUrl)
     {
+        _baseUrl = baseUrl;
         _httpClient = new HttpClient { BaseAddress = new Uri(baseUrl) };
     }
 
@@ -65,7 +67,7 @@ public class ApiClient
     #region Суши
     public async Task<SushieItem[]> GetProduct()
     {
-        HttpResponseMessage response = await _httpClient.GetAsync("api/products");
+        var response = await _httpClient.GetAsync("api/products");
 
         // Проверка успешности запроса
         response.EnsureSuccessStatusCode();
@@ -76,6 +78,11 @@ public class ApiClient
         // Десериализация JSON
         var jsonObject = JsonConvert.DeserializeObject<_ApiResponse>(json);
         var items = jsonObject.Data.ToObject<List<SushieItem>>();
+
+        foreach (SushieItem item in items)
+        {
+            item.photo = _baseUrl + "/" + item.photo;
+        }
 
         return items.ToArray();
     }

@@ -32,7 +32,7 @@
                             <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="{x:Type models:Category}">
                                 <Frame Padding="10" CornerRadius="5" BorderColor="Gray" BackgroundColor="LightGray">
                                     <Label Text="{Binding Name}" FontSize="Small"/>
                                 </Frame>
