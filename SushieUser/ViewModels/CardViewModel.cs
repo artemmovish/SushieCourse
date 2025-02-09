@@ -59,5 +59,11 @@ namespace SushieUser.ViewModels
 
             LoadData();
         }
+
+        [RelayCommand]
+        async void Apply()
+        {
+            SushieItems = new ObservableCollection<CartItem>();
+        }
     }
 }
