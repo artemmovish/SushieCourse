@@ -5,7 +5,7 @@
              xmlns:vm="clr-namespace:SushieUser.ViewModels"
              x:DataType="vm:CardViewModel"
              xmlns:models="clr-namespace:SushieUser.Models"
-             Title="CardPage">
+             Title="Корзина">
     <Grid Padding="10">
         <Grid.RowDefinitions>
             <RowDefinition Height=".1*"/>
@@ -58,6 +58,7 @@
             <Button Text="Обновить"
                 Margin="5" Command="{Binding LoadDataCommand}"/>
             <Button Text="Оформить заказ"
+                    Clicked="Button_Clicked"
                 Margin="5" Grid.Column="1"/>
         </Grid>
 

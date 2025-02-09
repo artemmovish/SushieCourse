@@ -5,57 +5,49 @@
              xmlns:vm="clr-namespace:SushieAdmin.ViewModels"
              x:DataType="vm:CreateViewModel"
              xmlns:models="clr-namespace:SushieUser.Models"
-             Title="CreatePage">
+             Title="Создание">
     <ScrollView>
-        <Grid RowDefinitions="Auto, Auto">
+        <Grid RowDefinitions="Auto, Auto" Padding="10" BackgroundColor="White">
             <!-- Форма для создания категории -->
-            <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="Auto, *" Margin="10">
-                <Label Text="Категория:" Grid.Row="0" Grid.Column="0" VerticalOptions="Center"/>
-                <Entry Text="{Binding Category.Name}" Placeholder="Введите название категории" Grid.Row="0" Grid.Column="1" x:Name="CategoryNameEntry"/>
-
-                <Button Text="Создать категорию" Grid.Row="1" Grid.ColumnSpan="2" 
-                Command="{Binding CreateCategoryCommand}"/>
-            </Grid>
+            <Frame Grid.Row="0" Padding="15" CornerRadius="10" BorderColor="LightGray" BackgroundColor="White">
+                <StackLayout Spacing="10">
+                    <Label Text="Создать категорию" FontAttributes="Bold" FontSize="Medium"/>
+                    <Entry Text="{Binding Category.Name}" Placeholder="Введите название категории" x:Name="CategoryNameEntry"/>
+                    <Button Text="Создать категорию" Command="{Binding CreateCategoryCommand}" BackgroundColor="#007AFF" TextColor="White" CornerRadius="5"/>
+                </StackLayout>
+            </Frame>
 
             <!-- Форма для создания суши -->
-            <Grid Grid.Row="1" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="Auto, *" Margin="10">
-                <Label Text="Название суши:" Grid.Row="0" Grid.Column="0" VerticalOptions="Center"/>
-                <Entry Text="{Binding SushieItem.name}" Placeholder="Введите название суши" Grid.Row="0" Grid.Column="1" x:Name="SushiNameEntry"/>
+            <Frame Grid.Row="1" Padding="15" CornerRadius="10" BorderColor="LightGray" BackgroundColor="White">
+                <StackLayout Spacing="10">
+                    <Label Text="Создать суши" FontAttributes="Bold" FontSize="Medium"/>
+                    <Entry Text="{Binding SushieItem.name}" Placeholder="Название суши" x:Name="SushiNameEntry"/>
+                    <Entry Text="{Binding SushieItem.price}" Placeholder="Цена" x:Name="SushiPriceEntry" Keyboard="Numeric"/>
+                    <Entry Text="{Binding SushieItem.quantity}" Placeholder="Количество" x:Name="SushiQuantityEntry" Keyboard="Numeric"/>
+                    <Entry Text="{Binding SushieItem.description}" Placeholder="Описание" x:Name="SushiDescriptionEntry"/>
 
-                <Label Text="Цена:" Grid.Row="1" Grid.Column="0" VerticalOptions="Center"/>
-                <Entry Text="{Binding SushieItem.price}" Placeholder="Введите цену" Grid.Row="1" Grid.Column="1" x:Name="SushiPriceEntry" Keyboard="Numeric"/>
-
-                <Label Text="Количество:" Grid.Row="2" Grid.Column="0" VerticalOptions="Center"/>
-                <Entry Text="{Binding SushieItem.quantity}" Placeholder="Введите количество" Grid.Row="2" Grid.Column="1" x:Name="SushiQuantityEntry" Keyboard="Numeric"/>
-
-                <Label Text="Описание:" Grid.Row="3" Grid.Column="0" VerticalOptions="Center"/>
-                <Entry Text="{Binding SushieItem.description}" Placeholder="Введите описание" Grid.Row="3" Grid.Column="1" x:Name="SushiDescriptionEntry"/>
-
-                <StackLayout Grid.Row="4">
-                    <Label Text="Категория:" Margin="0,0,0,10" Grid.Column="0" VerticalOptions="Center"/>
-                    <CollectionView ItemsSource="{Binding Categories}"
-                                    SelectedItem="{Binding CategoryFromSushieItem}"
-                                    SelectionMode="Single"
-                                    Grid.Row="4" Margin="0,0,0,0"
-                                    HorizontalOptions="Center">
+                    <Label Text="Категория:" FontAttributes="Bold" Margin="0,10,0,0"/>
+                    <CollectionView ItemsSource="{Binding Categories}" SelectedItem="{Binding CategoryFromSushieItem}" SelectionMode="Single">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
+                        </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="{x:Type models:Category}">
-                                <Frame InputTransparent="True" Padding="5" Background="Transparent" HorizontalOptions="Center">
-                                    <Label Text="{Binding Name}"/>
+                            <DataTemplate>
+                                <Frame Padding="10" CornerRadius="5" BorderColor="Gray" BackgroundColor="LightGray">
+                                    <Label Text="{Binding Name}" FontSize="Small"/>
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
-                </StackLayout>
-                <StackLayout Grid.Row="5">
-                    <Image Source="{Binding ImagePath}" WidthRequest="130" HeightRequest="130" Aspect="AspectFit"/>
-                    <Button Text="Добавить картинку"
-                    Command="{Binding SetImageCommand}"/>
-                </StackLayout>
 
-                <Button Text="Создать суши" Grid.Row="6" Grid.ColumnSpan="2"
-                Command="{Binding CreateProductCommand}"/>
-            </Grid>
+                    <StackLayout HorizontalOptions="Center" Margin="10">
+                        <Image Source="{Binding ImagePath}" WidthRequest="130" HeightRequest="130" Aspect="AspectFit"/>
+                        <Button Text="Добавить картинку" Command="{Binding SetImageCommand}" BackgroundColor="#FF9500" TextColor="White" CornerRadius="5"/>
+                    </StackLayout>
+
+                    <Button Text="Создать суши" Command="{Binding CreateProductCommand}" BackgroundColor="#34C759" TextColor="White" CornerRadius="5"/>
+                </StackLayout>
+            </Frame>
         </Grid>
     </ScrollView>
     
