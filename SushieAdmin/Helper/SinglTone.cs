@@ -37,7 +37,7 @@ namespace SushieUser.Helper
 
         private SinglTone()
         {
-            var httpClient = new HttpClient { BaseAddress = new Uri("https://6da36731-1aa4-43b1-9d13-91979568b03e.tunnel4.com") };
+            var httpClient = new HttpClient { BaseAddress = new Uri("https://539f6c58-8adb-4800-ac01-9da7f4df1298.tunnel4.com") };
             ApiClient = new ApiClient(httpClient);
             Auth = false;
         }
